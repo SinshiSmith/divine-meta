@@ -1,5 +1,8 @@
+use axum::extract::Path;
+use axum::http::StatusCode;
+use axum::Extension;
 use axum::Json;
-use axum::{http::StatusCode, response::IntoResponse, Extension};
+use sea_orm::ModelTrait;
 use sea_orm::{DatabaseConnection, EntityTrait};
 use serde::Serialize;
 
@@ -62,4 +65,21 @@ pub async fn get_champions(
             .map(|(champion, stars)| Champion::new(champion, stars))
             .collect::<Vec<Champion>>(),
     ))
+}
+
+pub async fn get_one_champion(
+    Extension(database): Extension<DatabaseConnection>,
+    Path(id): Path<String>,
+) -> Result<Json<Champion>, AppError> {
+    match champion::Entity::find_by_id(id).one(&database).await? {
+        Some(champion) => {
+            let stars = champion
+                .find_related(champion_star::Entity)
+                .all(&database)
+                .await?;
+
+            Ok(Json(Champion::new(&champion, &stars)))
+        }
+        None => Err(AppError::new(StatusCode::NOT_FOUND, "Champion Not Found")),
+    }
 }
