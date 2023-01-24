@@ -1,4 +1,5 @@
 mod database;
+mod errors;
 mod routes;
 
 use routes::create_routes;
