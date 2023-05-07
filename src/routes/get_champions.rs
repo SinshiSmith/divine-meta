@@ -5,11 +5,13 @@ use axum::Json;
 use sea_orm::ModelTrait;
 use sea_orm::{DatabaseConnection, EntityTrait};
 use serde::Serialize;
+use typeshare::typeshare;
 
 use crate::database::champion;
 use crate::database::champion_star;
 use crate::errors::AppError;
 
+#[typeshare]
 #[derive(Clone, Serialize)]
 pub struct Champion {
     id: String,
