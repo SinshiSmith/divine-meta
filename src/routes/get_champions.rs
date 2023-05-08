@@ -30,8 +30,11 @@ pub struct Champion {
 
 impl Champion {
     fn new(basic: &champion::Model, stars: &Vec<champion_star::Model>) -> Self {
+        let mut sorted_stars = stars.clone();
+        sorted_stars.sort_by(|a, b| a.star.cmp(&b.star));
+
         let (damage, health) =
-            stars
+            sorted_stars
                 .iter()
                 .fold((vec![], vec![]), |(mut damage, mut health), star| {
                     damage.push(star.damage);
