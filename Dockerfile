@@ -3,7 +3,7 @@
 # The default rust Docker container without any extra bells and whistles
 # It's going to be used only for building the application because it's
 # a full Debian OS which is overkill for running compiled Rust applications
-FROM rust:1.64.0 AS build
+FROM rust:1.69.0 AS build
 
 # Install musl-tools which is provides the `musl-gcc` necessary to compile:
 # - ring
