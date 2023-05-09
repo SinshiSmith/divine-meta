@@ -9,8 +9,8 @@ FROM rust:1.69.0 AS build
 # - ring
 # If your dependency tree doesn't have any of the above packages feel free to
 # comment this
-# RUN apt update
-# RUN apt-get install -y musl-tools
+RUN apt update
+RUN apt-get install -y musl-tools
 
 # Install dasel to inspect the app's name because Cargo insists on building
 # binaries with the binary name specified in Cargo.toml and there's no way to
