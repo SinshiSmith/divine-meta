@@ -67,7 +67,7 @@ COPY --from=build \
 
 # If your app relies on any external files at runtime, you should create an
 # assets folder and put them there and uncomment this line
-COPY ./assets/ /home/assets/
+# COPY ./assets/ /home/assets/
 
 WORKDIR /home
 CMD ["/usr/local/bin/app"]
