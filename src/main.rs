@@ -1,11 +1,13 @@
+use std::env;
+
 use divine_meta::app;
-use dotenvy::dotenv;
-use dotenvy_macro::dotenv;
 
 #[tokio::main]
 async fn main() {
-    dotenv().ok();
-    let database_uri = dotenv!("DATABASE_URL");
+    let database_uri = match env::var("DATABASE_URL") {
+        Ok(val) => val,
+        Err(_) => panic!("Could not find Environment variable:  DATABASE_URL"),
+    };
 
-    app(database_uri).await
+    app(&database_uri).await
 }
